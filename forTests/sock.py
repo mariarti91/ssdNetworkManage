@@ -13,5 +13,6 @@ while True:
 	print "get connection!"
 	data = conn.recv(100)
 	print "Data: " + data.decode("utf-8")
-	conn.send(b"aga,nu\n")
+	conn.send(b"aga,nu")
 	conn.close();
+	print "connection closed"
