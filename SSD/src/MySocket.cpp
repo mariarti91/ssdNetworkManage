@@ -23,6 +23,7 @@ void MySocket::slotStatusHandler(QAbstractSocket::SocketState state)
     case QAbstractSocket::HostLookupState:
         qDebug() << "host lookup...";
         break;
+
     case QAbstractSocket::ConnectingState:
         qDebug() << "wait for connection...";
         if(!waitForConnected())
@@ -30,13 +31,16 @@ void MySocket::slotStatusHandler(QAbstractSocket::SocketState state)
             qDebug() << "ERROR: not connected";
         }
         break;
+
     case QAbstractSocket::ConnectedState:
         qDebug() << "connected!";
         break;
+
     case QAbstractSocket::UnconnectedState:
         qDebug() << "connectio terminate";
         this->deleteLater();
         break;
+
     default:
         qDebug() << state;
         break;
@@ -46,6 +50,8 @@ void MySocket::slotStatusHandler(QAbstractSocket::SocketState state)
 
 void MySocket::sendData(const QByteArray &data)
 {
+    qDebug() << "sending data...";
+
     if(this->state() != QAbstractSocket::ConnectedState)
     {
         qDebug() << "ERROR: connecting error";
@@ -60,7 +66,10 @@ void MySocket::sendData(const QByteArray &data)
     sendStream << (quint16)(block.size() - sizeof(quint16));
 
     this->write(block);
-    if(!this->waitForBytesWritten()) qDebug() << "ERROD: data not sended";
+    if(this->waitForBytesWritten())
+        qDebug() << "complite.";
+    else
+        qDebug() << "ERROD: data not sended";
 }
 //---------------------------------------------------------------
 
@@ -69,18 +78,16 @@ void MySocket::slotGetData()
     qDebug() << "get data!";
     QDataStream stream(this);
 
-    if(m_pBlockSize)
-    {
-        if((quint16)this->bytesAvailable() < m_pBlockSize) return;
-        QByteArray buf;
-        buf.resize(m_pBlockSize);
-        stream >> buf;
-        m_pBlockSize = 0;
-        qDebug() << buf;
-    }
-    else
+    if(!m_pBlockSize)
     {
         if((quint16)this->bytesAvailable() < sizeof(quint16)) return;
         stream >> m_pBlockSize;
     }
+
+    if((quint16)this->bytesAvailable() < m_pBlockSize) return;
+    QByteArray buf;
+    buf.resize(m_pBlockSize);
+    stream >> buf;
+    m_pBlockSize = 0;
+    qDebug() << buf;
 }
