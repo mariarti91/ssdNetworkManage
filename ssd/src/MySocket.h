@@ -15,6 +15,9 @@ public:
 public slots:
     void slotStatusHandler(QAbstractSocket::SocketState state);
     void slotGetData();
+
+private:
+    quint16 m_pBlockSize;
 };
 
 #endif // MYSOCKET_H
