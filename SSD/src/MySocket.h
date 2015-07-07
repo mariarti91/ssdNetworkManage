@@ -13,11 +13,11 @@ public:
     void sendData(const QByteArray &data);
 
 public slots:
-    void slotStatusHandler(QAbstractSocket::SocketState state);
     void slotGetData();
 
 private:
     quint16 m_pBlockSize;
+    QTcpSocket* sock;
 };
 
 #endif // MYSOCKET_H

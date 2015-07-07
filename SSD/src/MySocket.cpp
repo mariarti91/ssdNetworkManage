@@ -5,7 +5,6 @@
 
 MySocket::MySocket(QObject *parent) : QTcpSocket(parent), m_pBlockSize(0)
 {
-    connect(this, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(slotStatusHandler(QAbstractSocket::SocketState)));
     connect(this, SIGNAL(readyRead()), SLOT(slotGetData()));
 }
 //---------------------------------------------------------------
@@ -16,46 +15,19 @@ MySocket::~MySocket()
 }
 //---------------------------------------------------------------
 
-void MySocket::slotStatusHandler(QAbstractSocket::SocketState state)
-{
-    switch (state)
-    {
-    case QAbstractSocket::HostLookupState:
-        qDebug() << "host lookup...";
-        break;
-
-    case QAbstractSocket::ConnectingState:
-        qDebug() << "wait for connection...";
-        if(!waitForConnected())
-        {
-            qDebug() << "ERROR: not connected";
-        }
-        break;
-
-    case QAbstractSocket::ConnectedState:
-        qDebug() << "connected!";
-        break;
-
-    case QAbstractSocket::UnconnectedState:
-        qDebug() << "connectio terminate";
-        this->deleteLater();
-        break;
-
-    default:
-        qDebug() << state;
-        break;
-    }
-}
-//---------------------------------------------------------------
-
 void MySocket::sendData(const QByteArray &data)
 {
-    qDebug() << "sending data...";
 
     if(this->state() != QAbstractSocket::ConnectedState)
     {
-        qDebug() << "ERROR: connecting error";
-        return;
+        qDebug() << "wait for connection...";
+        if(!this->waitForConnected())
+        {
+            qDebug() << "Fail. connecting error.";
+            return;
+        }
+        else
+            qDebug() << "connected.";
     }
 
     QByteArray block;
@@ -65,6 +37,7 @@ void MySocket::sendData(const QByteArray &data)
     sendStream.device()->seek(0);
     sendStream << (quint16)(block.size() - sizeof(quint16));
 
+    qDebug() << "sending data...";
     this->write(block);
     if(this->waitForBytesWritten())
         qDebug() << "complite.";
@@ -75,7 +48,7 @@ void MySocket::sendData(const QByteArray &data)
 
 void MySocket::slotGetData()
 {
-    qDebug() << "get data!";
+    qDebug() << "getting data...";
     QDataStream stream(this);
 
     if(!m_pBlockSize)
