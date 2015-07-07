@@ -13,6 +13,7 @@ public:
     void sendData(const QByteArray &data);
 
 public slots:
+    void slotStatusHandler(QAbstractSocket::SocketState state);
     void slotGetData();
 
 private:

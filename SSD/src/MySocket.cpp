@@ -6,12 +6,41 @@
 MySocket::MySocket(QObject *parent) : QTcpSocket(parent), m_pBlockSize(0)
 {
     connect(this, SIGNAL(readyRead()), SLOT(slotGetData()));
+    connect(this, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(slotStatusHandler(QAbstractSocket::SocketState)));
 }
 //---------------------------------------------------------------
 
 MySocket::~MySocket()
 {
 
+}
+//---------------------------------------------------------------
+
+void MySocket::slotStatusHandler(QAbstractSocket::SocketState state)
+{
+    switch (state)
+    {
+    case QAbstractSocket::HostLookupState:
+        qDebug() << "host lookup...";
+        break;
+
+    case QAbstractSocket::ConnectingState:
+        qDebug() << "wait for connection...";
+        break;
+
+    case QAbstractSocket::ConnectedState:
+        qDebug() << "connected!";
+        break;
+
+    case QAbstractSocket::UnconnectedState:
+        qDebug() << "connectio terminate";
+        this->deleteLater();
+        break;
+
+    default:
+        qDebug() << "ERROR: " << state;
+        break;
+    }
 }
 //---------------------------------------------------------------
 
