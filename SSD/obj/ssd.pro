@@ -8,7 +8,9 @@ TARGET = ssd.bin
 DESTDIR = ../bin
 
 SOURCES = ../src/main.cpp \
-    ../src/MySocket.cpp
+    ../src/MySocket.cpp \
+    ../src/MyNetworkManager.cpp
 
 HEADERS += \
-    ../src/MySocket.h
+    ../src/MySocket.h \
+    ../src/MyNetworkManager.h
