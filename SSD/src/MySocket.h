@@ -12,6 +12,9 @@ public:
 
     void sendData(const QByteArray &data);
 
+signals:
+    void signalData(QByteArray);
+
 public slots:
     void slotStatusHandler(QAbstractSocket::SocketState state);
     void slotGetData();
