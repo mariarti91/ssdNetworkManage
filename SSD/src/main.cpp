@@ -1,13 +1,12 @@
 #include <QCoreApplication>
 #include <QDebug>
 
-#include "MySocket.h"
+#include "MyNetworkManager.h"
 
 int main(int argc, char** argv)
 {
 	QCoreApplication app(argc, argv);
-    MySocket *sock = new MySocket(&app);
-    sock->connectToHost("127.0.0.1", 9191, QTcpSocket::ReadWrite);
-    sock->sendData("I'm SSD!");
+    MyNetworkManager nm(&app);
+    nm.sendData("127.0.0.1", 9191, "ololo");
 	return app.exec();
 }
