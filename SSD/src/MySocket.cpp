@@ -92,4 +92,5 @@ void MySocket::slotGetData()
     stream >> buf;
     m_pBlockSize = 0;
     qDebug() << buf;
+    emit signalData(buf);
 }
