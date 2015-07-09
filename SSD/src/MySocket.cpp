@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QIODevice>
+#include <QDataStream>
 
 MySocket::MySocket(QObject *parent) : QTcpSocket(parent), m_pBlockSize(0)
 {

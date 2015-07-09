@@ -7,9 +7,11 @@
 int main(int argc, char** argv)
 {
 	QCoreApplication app(argc, argv);
-    MyDataManager dm(&app);
-    MyNetworkManager nm(&app);
-    QObject::connect(&nm, SIGNAL(signalGetData(QByteArray)), &dm, SLOT(slotDataHandler(QByteArray)));
-    nm.sendData("127.0.0.1", 9191, "ololo");
+    //MyDataManager dm(&app);
+    //MyNetworkManager nm(&app);
+    //QObject::connect(&nm, SIGNAL(signalGetData(QByteArray)), &dm, SLOT(slotDataHandler(QByteArray)));
+    //nm.sendData("127.0.0.1", 9191, "ololo");
+    SsdDataBase db;
+    db.openDb("192.168.24.65", "VBD", "never", "123");
 	return app.exec();
 }
