@@ -14,7 +14,7 @@ public:
     void closeDb();
 
 private:
-    QSqlDatabase* m_db;
+    QSqlDatabase m_db;
     bool m_bIsOpen;
 };
 
