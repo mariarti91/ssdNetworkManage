@@ -9,8 +9,12 @@ DESTDIR = ../bin
 
 SOURCES = ../src/main.cpp \
     ../src/MySocket.cpp \
-    ../src/MyNetworkManager.cpp
+    ../src/MyNetworkManager.cpp \
+    ../src/MyDataManager.cpp \
+    ../src/SsdDataBase.cpp
 
 HEADERS += \
     ../src/MySocket.h \
-    ../src/MyNetworkManager.h
+    ../src/MyNetworkManager.h \
+    ../src/MyDataManager.h \
+    ../src/SsdDataBase.h
