@@ -13,9 +13,13 @@ public:
     bool openDb(const QString& addr, const QString& dbname, const QString& login, const QString& pass);
     void closeDb();
 
+    bool executeQuery(const QString& strQuery);
+    QSqlQuery lastSqlResult();
+
 private:
     QSqlDatabase m_db;
     bool m_bIsOpen;
+    QSqlQuery* m_pQuery;
 };
 
 #endif // SSDDATABASE_H
