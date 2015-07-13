@@ -4,11 +4,11 @@
 #include <QSqlDatabase>
 #include <QtSql>
 
-class SsdDataBase
+class MyDataBase
 {
 public:
-    SsdDataBase();
-    ~SsdDataBase();
+    MyDataBase();
+    ~MyDataBase();
 
     bool openDb(const QString& addr, const QString& dbname, const QString& login, const QString& pass);
     void closeDb();

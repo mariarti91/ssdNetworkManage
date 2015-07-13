@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-#include "SsdDataBase.h"
-
 class MyDataManager : public QObject
 {
     Q_OBJECT
@@ -17,7 +15,6 @@ public slots:
     void slotDataHandler(QByteArray data);
 
 private:
-    SsdDataBase *m_db;
 
 };
 

@@ -1,18 +1,18 @@
-#include "SsdDataBase.h"
+#include "MyDataBase.h"
 
-SsdDataBase::SsdDataBase() : m_bIsOpen(false)
+MyDataBase::MyDataBase() : m_bIsOpen(false)
 {
     m_db = QSqlDatabase::addDatabase("QPSQL");
 }
 //-------------------------------------------------------------------------
 
-SsdDataBase::~SsdDataBase()
+MyDataBase::~MyDataBase()
 {
     if(m_bIsOpen) m_db.close();
 }
 //-------------------------------------------------------------------------
 
-bool SsdDataBase::openDb(const QString &addr, const QString &dbname, const QString &login, const QString &pass)
+bool MyDataBase::openDb(const QString &addr, const QString &dbname, const QString &login, const QString &pass)
 {
     m_db.setHostName(addr);
     m_db.setPort(5432);
@@ -23,7 +23,7 @@ bool SsdDataBase::openDb(const QString &addr, const QString &dbname, const QStri
 }
 //------------------------------------------------------------------------
 
-void SsdDataBase::closeDb()
+void MyDataBase::closeDb()
 {
     if(m_bIsOpen) m_db.close();
 }
