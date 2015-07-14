@@ -21,11 +21,8 @@ signals:
 public slots:
 
 private:
-    bool getUspdList();
-
     MyNetworkManager m_pNetworkManager;
     MyDataManager m_pDataManager;
-    MyDataBase *m_pDataBase;
 
     void timerEvent(QTimerEvent *event);
 

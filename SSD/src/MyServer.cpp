@@ -6,15 +6,10 @@ MyServer::MyServer(QObject *parent) : QObject(parent), m_pNetworkManager(parent)
     m_pUspdList = new QMap<quint8, QString>();
     connect(&m_pNetworkManager, SIGNAL(signalGetData(QByteArray)), &m_pDataManager, SLOT(slotDataHandler(QByteArray)));
 
-    m_pDataBase = new MyDataBase();
-    if(m_pDataBase->openDb("192.168.24.65", "VBD", "never", "123"))
-        qDebug() << "connecting to database!!!";
-    else
-        qDebug() << "nope!";
-
-    if(!getUspdList())
+    m_pUspdList = m_pDataManager.getUspdList();
+    if(m_pUspdList->isEmpty())
     {
-        qDebug() << "getting uspdList error!";
+        qDebug() << "uspd list is empty!";
         return;
     }
     startTimer(10000);
@@ -23,35 +18,8 @@ MyServer::MyServer(QObject *parent) : QObject(parent), m_pNetworkManager(parent)
 
 MyServer::~MyServer()
 {
-    m_pDataBase->closeDb();
-    delete m_pDataBase;
     m_pUspdList->clear();
     delete m_pUspdList;
-}
-//----------------------------------------------------------------------------
-
-bool MyServer::getUspdList()
-{
-    if(m_pDataBase->executeQuery("SELECT id, network_address FROM uspd;"))
-    {
-        QSqlQuery query = m_pDataBase->lastSqlResult();
-
-        while(query.next())
-        {
-            m_pUspdList->insert(query.value(0).toUInt(), query.value(1).toString());
-        }
-
-        /*qDebug() << "id\t address";
-        foreach (int key, m_pUspdList->keys())
-        {
-            qDebug() << key << "\t" << m_pUspdList->value(key);
-        }*/
-        return true;
-    }
-    {
-        qDebug() << "sql query error";
-        return false;
-    }
 }
 //----------------------------------------------------------------------------
 
