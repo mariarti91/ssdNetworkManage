@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "SsdDataBase.h"
+#include "MyDataBase.h"
 
 class MyDataManager : public QObject
 {
@@ -11,14 +11,15 @@ class MyDataManager : public QObject
 public:
     explicit MyDataManager(QObject *parent = 0);
     ~MyDataManager();
+
+    QMap<quint8, QString>* getUspdList();
 signals:
 
 public slots:
     void slotDataHandler(QByteArray data);
 
 private:
-    SsdDataBase *m_db;
-
+    MyDataBase *m_pDataBase;
 };
 
 #endif // MYDATAMANAGER_H

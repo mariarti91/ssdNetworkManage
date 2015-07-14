@@ -11,10 +11,12 @@ SOURCES = ../src/main.cpp \
     ../src/MySocket.cpp \
     ../src/MyNetworkManager.cpp \
     ../src/MyDataManager.cpp \
-    ../src/SsdDataBase.cpp
+    ../src/MyDataBase.cpp \
+    ../src/MyServer.cpp
 
 HEADERS += \
     ../src/MySocket.h \
     ../src/MyNetworkManager.h \
     ../src/MyDataManager.h \
-    ../src/SsdDataBase.h
+    ../src/MyDataBase.h \
+    ../src/MyServer.h

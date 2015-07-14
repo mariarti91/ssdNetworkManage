@@ -14,3 +14,4 @@ SOURCES = ../src/main.cpp \
 HEADERS += \
     ../src/MyServer.h \
    # ../../SSD/src/MySocket.h
+    ../src/comands.h

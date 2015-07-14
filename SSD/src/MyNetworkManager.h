@@ -11,7 +11,7 @@ public:
     explicit MyNetworkManager(QObject *parent = 0);
     ~MyNetworkManager();
 
-    void sendData(const QString &addr, const int &port, const QByteArray& data);
+    void sendData(const quint8& uspd_id, const QString &addr, const int &port, const QByteArray& data);
 
 signals:
     void signalGetData(QByteArray data);
