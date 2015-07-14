@@ -16,5 +16,10 @@ MyDataManager::~MyDataManager()
 
 void MyDataManager::slotDataHandler(QByteArray data)
 {
-    qDebug() << "Data manager get data: " << data;
+    qDebug() << "Data manager geted data:";
+
+    quint8 uspd_id = data.data()[0];
+    data.remove(0, 1);
+
+    qDebug() << "uspd id: " << uspd_id << "data: " << data;
 }

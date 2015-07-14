@@ -7,6 +7,8 @@
 #include "MyDataManager.h"
 #include "MyDataBase.h"
 
+#include <QTimerEvent>
+
 class MyServer : public QObject
 {
     Q_OBJECT
@@ -25,7 +27,9 @@ private:
     MyDataManager m_pDataManager;
     MyDataBase *m_pDataBase;
 
-    QMap<int, QString> *m_pUspdList;
+    void timerEvent(QTimerEvent *event);
+
+    QMap<quint8, QString> *m_pUspdList;
 };
 
 #endif // MYSERVER_H

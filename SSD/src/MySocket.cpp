@@ -4,9 +4,10 @@
 #include <QIODevice>
 #include <QDataStream>
 
-MySocket::MySocket(QObject *parent) : QTcpSocket(parent), m_pBlockSize(0)
+MySocket::MySocket(QObject *parent) : QTcpSocket(parent), m_pBlockSize(0), m_pUspdId(0)
 {
     connect(this, SIGNAL(readyRead()), SLOT(slotGetData()));
+    connect(this, SIGNAL(disconnected()), SLOT(deleteLater()));
     connect(this, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(slotStatusHandler(QAbstractSocket::SocketState)));
 }
 //---------------------------------------------------------------
@@ -22,15 +23,15 @@ void MySocket::slotStatusHandler(QAbstractSocket::SocketState state)
     switch (state)
     {
     case QAbstractSocket::HostLookupState:
-        qDebug() << "host lookup...";
+        //qDebug() << "host lookup...";
         break;
 
     case QAbstractSocket::ConnectingState:
-        qDebug() << "wait for connection...";
+        //qDebug() << "wait for connection...";
         break;
 
     case QAbstractSocket::ConnectedState:
-        qDebug() << "connected!";
+        //qDebug() << "connected";
         break;
 
     case QAbstractSocket::UnconnectedState:
@@ -57,7 +58,7 @@ void MySocket::sendData(const QByteArray &data)
             return;
         }
         else
-            qDebug() << "connected.";
+            qDebug() << "connected";
     }
 
     QByteArray block;
@@ -89,9 +90,16 @@ void MySocket::slotGetData()
 
     if((quint16)this->bytesAvailable() < m_pBlockSize) return;
     QByteArray buf;
-    buf.resize(m_pBlockSize);
+    buf.resize(m_pBlockSize + 1);
     stream >> buf;
     m_pBlockSize = 0;
-    qDebug() << buf;
+    //qDebug() << buf;
+    buf.push_front(m_pUspdId);
     emit signalData(buf);
+}
+//----------------------------------------------------------------
+
+void MySocket::setUspdId(const quint8 &id)
+{
+    m_pUspdId = id;
 }

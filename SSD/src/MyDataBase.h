@@ -14,6 +14,7 @@ public:
     void closeDb();
 
     bool executeQuery(const QString& strQuery);
+    bool insertUspdReply(const int& uspd_id, const QByteArray& reply);
     QSqlQuery lastSqlResult();
 
 private:

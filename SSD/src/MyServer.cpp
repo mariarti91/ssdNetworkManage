@@ -3,9 +3,8 @@
 
 MyServer::MyServer(QObject *parent) : QObject(parent), m_pNetworkManager(parent), m_pDataManager(parent)
 {
-    m_pUspdList = new QMap<int, QString>();
+    m_pUspdList = new QMap<quint8, QString>();
     connect(&m_pNetworkManager, SIGNAL(signalGetData(QByteArray)), &m_pDataManager, SLOT(slotDataHandler(QByteArray)));
-    //m_pNetworkManager.sendData("127.0.0.1", 9191, "ololo");
 
     m_pDataBase = new MyDataBase();
     if(m_pDataBase->openDb("192.168.24.65", "VBD", "never", "123"))
@@ -13,7 +12,12 @@ MyServer::MyServer(QObject *parent) : QObject(parent), m_pNetworkManager(parent)
     else
         qDebug() << "nope!";
 
-    getUspdList();
+    if(!getUspdList())
+    {
+        qDebug() << "getting uspdList error!";
+        return;
+    }
+    startTimer(10000);
 }
 //----------------------------------------------------------------------------
 
@@ -34,7 +38,7 @@ bool MyServer::getUspdList()
 
         while(query.next())
         {
-            m_pUspdList->insert(query.value(0).toInt(), query.value(1).toString());
+            m_pUspdList->insert(query.value(0).toUInt(), query.value(1).toString());
         }
 
         /*qDebug() << "id\t address";
@@ -47,6 +51,20 @@ bool MyServer::getUspdList()
     {
         qDebug() << "sql query error";
         return false;
+    }
+}
+//----------------------------------------------------------------------------
+
+void MyServer::timerEvent(QTimerEvent *event)
+{
+    qDebug() << "\t uspd id\t\t address\t\t port";
+    foreach (int key, m_pUspdList->keys())
+    {
+        QString addr = m_pUspdList->value(key);
+        int port = QString(addr.split(':').at(1)).toUInt();
+        addr = QString(addr.split(':').at(0));
+        qDebug() << "\t" << key << "\t\t" << addr << "\t" << port;
+        m_pNetworkManager.sendData(key, addr, port, QByteArray("1"));
     }
 }
 //----------------------------------------------------------------------------

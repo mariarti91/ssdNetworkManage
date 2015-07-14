@@ -11,6 +11,7 @@ public:
     ~MySocket();
 
     void sendData(const QByteArray &data);
+    void setUspdId(const quint8& id);
 
 signals:
     void signalData(QByteArray);
@@ -22,6 +23,7 @@ public slots:
 private:
     quint16 m_pBlockSize;
     QTcpSocket* sock;
+    quint8 m_pUspdId;
 };
 
 #endif // MYSOCKET_H
