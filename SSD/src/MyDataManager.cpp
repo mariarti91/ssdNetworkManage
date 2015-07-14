@@ -28,6 +28,10 @@ void MyDataManager::slotDataHandler(QByteArray data)
     data.remove(0, 1);
 
     qDebug() << "uspd id: " << uspd_id << "data: " << data;
+    if(!m_pDataBase->insertUspdReply(uspd_id, data))
+    {
+        qDebug() << m_pDataBase->lastSqlResult().lastError();
+    }
 }
 //----------------------------------------------------------------------
 

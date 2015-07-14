@@ -47,3 +47,13 @@ QSqlQuery MyDataBase::lastSqlResult()
 {
     return *m_pQuery;
 }
+//-------------------------------------------------------------------------
+
+bool MyDataBase::insertUspdReply(const int &uspd_id, const QByteArray &reply)
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO raw_data(id_uspd, data) VALUES(:uspd_id, :data)");
+    query.bindValue(":uspd_id", uspd_id);
+    query.bindValue(":data", reply);
+    return query.exec();
+}
