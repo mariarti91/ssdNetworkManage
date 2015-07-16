@@ -49,11 +49,12 @@ QSqlQuery MyDataBase::lastSqlResult()
 }
 //-------------------------------------------------------------------------
 
-bool MyDataBase::insertUspdReply(const int &uspd_id, const QByteArray &reply)
+bool MyDataBase::insertUspdReply(const int &uspd_id, const QByteArray &reply, const QString &dt)
 {
     QSqlQuery query;
-    query.prepare("INSERT INTO raw_data(id_uspd, data) VALUES(:uspd_id, :data)");
+    query.prepare("INSERT INTO raw_data(id_uspd, data, datetime) VALUES(:uspd_id, :data, :dt)");
     query.bindValue(":uspd_id", uspd_id);
     query.bindValue(":data", reply);
+    query.bindValue(":dt", dt);
     return query.exec();
 }
