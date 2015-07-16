@@ -12,7 +12,7 @@ MyServer::MyServer(QObject *parent) : QObject(parent), m_pNetworkManager(parent)
         qDebug() << "uspd list is empty!";
         return;
     }
-    startTimer(10000);
+    startTimer(5000);
 }
 //----------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ void MyServer::timerEvent(QTimerEvent *event)
         int port = QString(addr.split(':').at(1)).toUInt();
         addr = QString(addr.split(':').at(0));
         qDebug() << "\t" << key << "\t\t" << addr << "\t" << port;
-        m_pNetworkManager.sendData(key, addr, port, QByteArray("1"));
+        m_pNetworkManager.sendData(key, addr, port, QByteArray("4"));
     }
 }
 //----------------------------------------------------------------------------

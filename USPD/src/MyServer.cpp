@@ -66,6 +66,10 @@ void MyServer::slotGetData()
         sendData(QByteArray("\xff\x01\x29\x05\xff\x03\x05\x0a\x1e\xb4\xa6", 11), *client);
         break;
 
+    case GET_TRUE:
+        sendData(QByteArray("\x00\x00\x00\x01\x01\xc9\x00\x00\x14\x00\x00\x00\x01\x01\xc9\x00\x14\x40\x00\x00\x00\x50\x00\x00\x00\x60\x00\x00\x00\x70\x00\x00\x00\x80\x00\x00\x00", 37), *client);
+        break;
+
     default:
         sendData("\xff", *client);
         break;
@@ -82,6 +86,7 @@ void MyServer::sendData(const QByteArray &data, QTcpSocket &sock)
 
     sendStream << quint16(0) << data;
     sendStream.device()->seek(0);
+
     sendStream << (quint16)(block.size() - sizeof(quint16));
 
     sock.write(block);

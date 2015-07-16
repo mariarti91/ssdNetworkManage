@@ -1,6 +1,7 @@
 #include "MyDataManager.h"
 
 #include <QDebug>
+#include <QDateTime>
 
 MyDataManager::MyDataManager(QObject *parent) :
     QObject(parent)
@@ -26,9 +27,9 @@ void MyDataManager::slotDataHandler(QByteArray data)
 
     quint8 uspd_id = data.data()[0];
     data.remove(0, 1);
-
-    qDebug() << "uspd id: " << uspd_id << "data: " << data;
-    if(!m_pDataBase->insertUspdReply(uspd_id, data))
+    QString dt = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss");
+    qDebug() << "uspd id: " << uspd_id << "\ndata: " << data << "\ndatetime: " << dt;
+    if(!m_pDataBase->insertUspdReply(uspd_id, data, dt))
     {
         qDebug() << m_pDataBase->lastSqlResult().lastError();
     }
