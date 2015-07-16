@@ -10,5 +10,8 @@
 //get info value
 #define GET_INFO 51
 
+//get true data =)
+#define GET_TRUE 52
+
 #endif // COMANDS_H
 
