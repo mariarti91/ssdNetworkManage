@@ -27,7 +27,7 @@ void MyDataManager::slotDataHandler(QByteArray data)
 
     quint8 uspd_id = data.data()[0];
     data.remove(0, 1);
-    QString dt = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss");
+    QString dt = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
     qDebug() << "uspd id: " << uspd_id << "\ndata: " << data << "\ndatetime: " << dt;
     if(!m_pDataBase->insertUspdReply(uspd_id, data, dt))
     {
