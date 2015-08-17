@@ -41,7 +41,6 @@ void MyServer::timerEvent(QTimerEvent *event)
         QString message = QString("%1:%2").arg(key).arg(m_pUspdList->value(key));
         defaultExchange->publish(message, "uspd_list");
         qDebug() << " [x] Sent " << message;
-
     }
 }
 //----------------------------------------------------------------------------
