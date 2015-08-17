@@ -76,7 +76,7 @@ void MyNetworkManager::sendData(const quint8 &uspd_id, const QString &addr, cons
 void MyNetworkManager::slotGetDataHandler(QByteArray data)
 {
     QAmqpExchange *defaultExchange = m_pClient.createExchange();
-    defaultExchange->publish(data, "data");
+    defaultExchange->publish(data.toBase64(), "data");
     qDebug() << " [x] Sent " << data;
 }
 //-------------------------------------------------------------------------------------

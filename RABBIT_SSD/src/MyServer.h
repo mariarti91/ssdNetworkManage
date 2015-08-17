@@ -8,6 +8,8 @@
 #include "qamqpexchange.h"
 #include "qamqpqueue.h"
 
+#include "MyDataBase.h"
+
 class MyServer : public QObject
 {
     Q_OBJECT
@@ -19,13 +21,16 @@ signals:
 
 public slots:
     void slotClientConnected();
-    void slotQueueDeclared();
+    void slotOutputQueueDeclared();
+    void slotInputQueueDeclared();
+    void slotMessageReceived();
 
 private:
     void timerEvent(QTimerEvent *event);
 
     QMap<quint8, QString> *m_pUspdList;
     QAmqpClient m_pClient;
+    MyDataBase *m_pDataBase;
 
 };
 
