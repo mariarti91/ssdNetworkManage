@@ -1,11 +1,12 @@
 #include <QCoreApplication>
-#include <QDebug>
 
 #include "MyServer.h"
+#include "MyNetworkManager.h"
 
 int main(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
     MyServer server(&app);
-	return app.exec();
+    MyNetworkManager manager(&app);
+    return app.exec();
 }

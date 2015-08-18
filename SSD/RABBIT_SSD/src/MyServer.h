@@ -2,12 +2,13 @@
 #define MYSERVER_H
 
 #include <QObject>
-
-#include "MyNetworkManager.h"
-#include "MyDataManager.h"
-#include "MyDataBase.h"
-
 #include <QTimerEvent>
+
+#include "qamqpclient.h"
+#include "qamqpexchange.h"
+#include "qamqpqueue.h"
+
+#include "MyDataBase.h"
 
 class MyServer : public QObject
 {
@@ -19,14 +20,18 @@ public:
 signals:
 
 public slots:
+    void slotClientConnected();
+    void slotOutputQueueDeclared();
+    void slotInputQueueDeclared();
+    void slotMessageReceived();
 
 private:
-    MyNetworkManager m_pNetworkManager;
-    MyDataManager m_pDataManager;
-
     void timerEvent(QTimerEvent *event);
 
     QMap<quint8, QString> *m_pUspdList;
+    QAmqpClient m_pClient;
+    MyDataBase *m_pDataBase;
+
 };
 
 #endif // MYSERVER_H

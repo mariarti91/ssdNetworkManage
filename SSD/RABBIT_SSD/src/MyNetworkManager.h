@@ -4,6 +4,10 @@
 #include <QObject>
 #include "MySocket.h"
 
+#include "qamqpclient.h"
+#include "qamqpexchange.h"
+#include "qamqpqueue.h"
+
 class MyNetworkManager : public QObject
 {
     Q_OBJECT
@@ -17,9 +21,14 @@ signals:
     void signalGetData(QByteArray data);
 public slots:
     void slotGetDataHandler(QByteArray data);
+    void slotClientConnected();
+    void slotInputQueueDeclared();
+    void slotOutputQueueDeclared();
+    void slotMessageReceived();
 
 private:
-    QList<MySocket> *m_pConnections;
+    QAmqpClient m_pClient;
+
 };
 
 #endif // MYNETWORKMANAGER_H
